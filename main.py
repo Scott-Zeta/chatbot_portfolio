@@ -1,6 +1,7 @@
 import os
 from openai import OpenAI
 from dotenv import load_dotenv
+from fastapi import FastAPI, Form
 
 load_dotenv()
 
@@ -8,9 +9,10 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 chat_log = [{"role": "system", "content": "You are a helpful assistant."}]
 
-while True:
-    user_input = input()
-    
+app = FastAPI()
+
+@app.post("/")
+async def chat(user_input: str = Form(...)):
     chat_log.append({"role": "user", "content": user_input})
     
     completion = client.chat.completions.create(
@@ -19,4 +21,5 @@ while True:
 )
     bot_response = completion.choices[0].message.content
     chat_log.append({"role": "assistant", "content": bot_response})
-    print(bot_response)
+    
+    return bot_response

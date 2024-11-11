@@ -2,6 +2,7 @@ import os
 from openai import OpenAI
 from dotenv import load_dotenv
 from fastapi import FastAPI, Form
+from typing import Annotated
 
 load_dotenv()
 
@@ -12,7 +13,7 @@ chat_log = [{"role": "system", "content": "You are a helpful assistant."}]
 app = FastAPI()
 
 @app.post("/")
-async def chat(user_input: str = Form(...)):
+async def chat(user_input: Annotated[str, Form()]):
     chat_log.append({"role": "user", "content": user_input})
     
     completion = client.chat.completions.create(

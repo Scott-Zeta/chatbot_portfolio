@@ -45,8 +45,9 @@ class Chatbox {
 
     let msg1 = { name: 'User', message: text1 };
     this.messages.push(msg1);
+    this.updateChatText;
 
-    fetch('http://127.0.0.1:8000/', {
+    fetch('https://chatbot-wxno.onrender.com/', {
       method: 'POST',
       body: JSON.stringify({ user_input: text1 }),
       mode: 'cors',

@@ -285,6 +285,8 @@ class Chatbox {
 
     let msg1 = { name: 'User', message: text1 };
     this.messages.push(msg1);
+    this.updateChatText(chatbox);
+    textField.value = '';
 
     fetch('https://chatbot-wxno.onrender.com/', {
       method: 'POST',
@@ -299,7 +301,6 @@ class Chatbox {
         let msg2 = { name: 'bot', message: r };
         this.messages.push(msg2);
         this.updateChatText(chatbox);
-        textField.value = '';
       })
       .catch((error) => {
         console.error('Error:', error);
